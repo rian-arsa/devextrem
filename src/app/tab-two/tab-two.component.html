@@ -1,0 +1,15 @@
+<div class="container">
+  <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" [columnAutoWidth]="true" id="datagrid">
+    <dxo-load-panel [enabled]="true">
+    </dxo-load-panel>
+    <!-- <dxi-column dataField="id" dataType="number"></dxi-column> -->
+    <dxi-column dataField="title" dataType="string"></dxi-column>
+    <dxi-column dataField="author" dataType="string"></dxi-column>
+    <dxi-column dataField="publish" dataType="date" cellTemplate="publish"></dxi-column>
+    <div *dxTemplate="let data of 'publish'">
+      <div>{{data.text | date}}</div>
+    </div>
+    <dxi-column dataField="genre" dataType="string"></dxi-column>
+
+  </dx-data-grid>
+</div>

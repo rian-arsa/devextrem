@@ -1,0 +1,72 @@
+<div class="container">
+  <dx-button id="backMenu" icon="arrowleft" text="Back to previous menu" (onClick)="back()">
+  </dx-button>
+
+  <h3>{{ title }}</h3>
+  <br>
+  <p (mouseenter)="toggleEnter()" (mouseleave)="toggleLeave()" id="titleDatagridSatu">Datagrid 1</p>
+  <dx-popover target="#titleDatagridSatu" position="bottom" [width]="300" [showTitle]="true" title="Details:"
+    [(visible)]="defaultVisible">
+    <div *dxTemplate="let data of 'content'">
+      Datagrid satu menggunakan data dummy
+    </div>
+  </dx-popover>
+
+  <dx-data-grid [dataSource]="employees" [showBorders]="true" [columnAutoWidth]="true" id="datagridSatu">
+    <dxi-column dataField="id" dataType="number"></dxi-column>
+    <dxi-column dataField="name" dataType="string"></dxi-column>
+    <dxi-column dataField="position" dataType="string"></dxi-column>
+    <dxi-column dataField="descTask" width="400" dataType="string"></dxi-column>
+
+    <dxi-column dataField="totalTask" dataType="number" alignment="center"></dxi-column>
+    <dxi-column dataField="joinDate" dataType="date" cellTemplate="joinDate"></dxi-column>
+
+    <div *dxTemplate="let data of 'joinDate'">
+      <div>{{data.text | date}}</div>
+    </div>
+
+    <dxo-editing mode="popup" [allowAdding]="true"></dxo-editing>
+  </dx-data-grid>
+
+  <p>Datagrid 2</p>
+  <dx-data-grid [dataSource]="employeesFilter" [showBorders]="true" [columnAutoWidth]="true" id="datagridDua">
+    <dxi-column dataField="id" dataType="number"></dxi-column>
+    <dxi-column dataField="name" dataType="string"></dxi-column>
+    <dxi-column dataField="position" dataType="string"></dxi-column>
+    <dxi-column dataField="descTask" width="400" dataType="string" [visible]="false"></dxi-column>
+
+    <dxi-column dataField="totalTask" dataType="number" alignment="center"></dxi-column>
+    <dxi-column dataField="joinDate" dataType="date" cellTemplate="joinDate"></dxi-column>
+
+    <div *dxTemplate="let data of 'joinDate'">
+      <div>{{data.text | date}}</div>
+    </div>
+
+    <dxi-column dataField="actions" cellTemplate="actions" alignment="center"></dxi-column>
+    <div *dxTemplate="let data of 'actions'">
+      <dx-button (onClick)="popupDate(data)" icon="info" id="showButton"></dx-button>
+    </div>
+
+
+
+    <!-- <dxo-summary>
+      <dxi-total-item column="totalTask" summaryType="sum">
+      </dxi-total-item>
+    </dxo-summary> -->
+  </dx-data-grid>
+
+  <h3>Total : {{sumTotalTask }}</h3>
+
+  <dx-load-panel [(visible)]="panelVisible">
+
+  </dx-load-panel>
+
+
+  <dx-popup [(visible)]="popupVisible" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="200"
+    [showTitle]="false" [width]="200" [resizeEnabled]="true">
+    <div *dxTemplate="let data of 'popup-content'">
+      <span class="popup-body">{{contentDataPopUp | date}}</span>
+    </div>
+  </dx-popup>
+
+</div>

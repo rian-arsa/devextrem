@@ -13,6 +13,6 @@
 #tabs {
   margin-bottom: 20px;
 }
-div:has(> .active) {
+.active {
   font-weight: bold;
 }

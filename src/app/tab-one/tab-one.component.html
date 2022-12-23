@@ -1,0 +1,88 @@
+<dx-load-panel [(visible)]="isLoading">
+</dx-load-panel>
+
+<div class="container">
+  <!--! Datagrid -->
+  <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
+    [columnAutoWidth]="true" id="datagrid" [allowColumnReordering]="true">
+
+    <!--! Element Load Panel -->
+    <dxo-load-panel [enabled]="true">
+    </dxo-load-panel>
+
+
+    <!--! Column2 dari Datagrid -->
+    <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>
+    <dxi-column dataField="title" dataType="string" sortOrder="asc"></dxi-column>
+    <dxi-column dataField="author" dataType="string"></dxi-column>
+    <dxi-column dataField="publish" dataType="date" cellTemplate="publish"></dxi-column>
+    <div *dxTemplate="let data of 'publish'">
+      <div>{{data.text | date}}</div>
+    </div>
+    <dxi-column dataField="genre" dataType="string">
+      <dxo-lookup [dataSource]="genres"></dxo-lookup>
+    </dxi-column>
+
+    <!-- <dxo-column-chooser [enabled]="true"></dxo-column-chooser> -->
+    <!-- <dxo-filter-row [visible]="true"></dxo-filter-row> -->
+    <!-- <dxo-search-panel [visible]="true"></dxo-search-panel> -->
+
+
+    <!--! Add custom field form editing -->
+    <dxi-column dataField="isAccess" dataType="boolean" [visible]="false"></dxi-column>
+
+    <!--! Edit & Save Datagrid -->
+    <dxo-editing mode="form" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true" [changes]="changes">
+      <dxo-form>
+        <dxi-item dataField="title" dataType="string">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="genre" dataType="string">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="author" dataType="string">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="publish" dataType="date">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-item>
+        <dxi-item dataField="isAccess" dataType="boolean"></dxi-item>
+        <!-- <dxi-item dataField="isAccess" template="isAccess">
+          <div *dxTemplate="let data of 'isAccess'">
+            <dx-check-box [value]="false" text="Label">
+              <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dx-check-box>
+          </div>
+        </dxi-item> -->
+      </dxo-form>
+    </dxo-editing>
+
+    <!-- <dxo-scrolling mode="infinite"></dxo-scrolling> -->
+
+    <!--! Custom buttons Action  -->
+    <dxi-column type="buttons" caption="Actions" [fixed]="true">
+      <dxi-button name="edit" icon="edit"></dxi-button>
+      <dxi-button template="detailIcon">
+        <div *dxTemplate="let data of 'detailIcon'">
+          <dx-button icon="doc" id="detailButton" #detailButton (onClick)="onDetailButton(data)"></dx-button>
+        </div>
+      </dxi-button>
+      <dxi-button template="detailDelete">
+        <div *dxTemplate="let data of 'detailDelete'">
+          <dx-button icon="close" id="deleteButton" #detailDelete (onClick)="onDeleteButton(data)"></dx-button>
+        </div>
+      </dxi-button>
+      <dxi-button name="save" icon="save"></dxi-button>
+    </dxi-column>
+
+  </dx-data-grid>
+
+  <!--! Element popup -->
+  <dx-popup [(visible)]="isPopupVisible" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="150"
+    [width]="200" [resizeEnabled]="true" [showTitle]="false">
+    <div *dxTemplate="let data of 'popup-content'">
+      <h1 class="popup-body">Berhasil</h1>
+    </div>
+  </dx-popup>
+
+</div>

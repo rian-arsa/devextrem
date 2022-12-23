@@ -1,0 +1,16 @@
+<div id="container">
+  <dx-tabs (onItemClick)="onItemClick($event)" width="300px" height="30px" id="tabs">
+    <dxi-item>
+      <div *dxTemplate>
+        <div class="tab-item" routerLinkActive="active">Tabs 1</div>
+      </div>
+    </dxi-item>
+    <dxi-item>
+      <div *dxTemplate>
+        <div class="tab-item" routerLinkActive="active">Tabs 2</div>
+      </div>
+    </dxi-item>
+  </dx-tabs>
+  <router-outlet></router-outlet>
+
+</div>
