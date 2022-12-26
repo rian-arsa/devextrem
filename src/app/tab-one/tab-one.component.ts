@@ -36,6 +36,7 @@ export class TabOneComponent {
     this.postSub = this.post.subscribe(
       res => {
         this.posts = res;
+        this.isLoading = true
       }
     )
     this.postService.getPosts().subscribe(
@@ -49,38 +50,30 @@ export class TabOneComponent {
   //! Function for Save & Update
   // Menggunakan function datagrid onSaving()
   saveData(e: any) {
-    console.log("popopo");
 
     this.isPopupVisible = false
     this.isLoading = true
 
     const data = e.changes[0]
+    console.log(e);
 
     if (data) {
       e.cancel = true
       if (data.type === "insert") { // Insert Data
         const lastData = Object.values(this.posts[this.posts.length - 1])
 
-        console.log(e);
-
-
-        const tempPost = {
-          id: lastData[0] + 1,
-          title: data.data.title,
-          author: data.data.author,
-          publish: data.data.publish,
-          genre: data.data.genre
-        }
+        const tempPost = { ...data.data, id: lastData[0] + 1 }
 
         this.postService.getCreate(tempPost).subscribe(
           res => {
             this.posts.push(tempPost)
             console.log("[BERHASIL]");
-
           }
         )
       } else if (data.type === "update") { // Update Data
         const id = this.posts.findIndex((x) => x === data.key)
+        console.log(data);
+
         const postData: Post = {
           id: data.key.id,
           title: data.data.title ? data.data.title : data.key.title,
@@ -106,7 +99,8 @@ export class TabOneComponent {
 
   // ! Function Detail Button
   onDetailButton(e: any) {
-    const id = Object.values(this.posts[e.row.rowIndex])[0]
+
+    const id = e.data.id
     this.router.navigate([id], { relativeTo: this.route })
   }
 

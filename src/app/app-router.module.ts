@@ -4,6 +4,7 @@ import { TabOneComponent } from './tab-one/tab-one.component';
 import { TabTwoComponent } from './tab-two/tab-two.component';
 import { IndexComponent } from './index/index.component';
 import { TabDetailComponent } from './tab-one/tab-detail/tab-detail.component';
+import { FormComponent } from './form/form/form.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home/tab-1', pathMatch: 'full' },
@@ -15,6 +16,9 @@ const routes: Routes = [
   },
   {
     path: 'home/tab-1/:id', component: TabDetailComponent
+  },
+  {
+    path: 'form', component: FormComponent
   }
 ];
 

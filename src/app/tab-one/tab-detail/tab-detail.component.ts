@@ -60,8 +60,22 @@ export class TabDetailComponent {
       this.panelVisible = false
       this.popupVisible = true
 
+      const coba = e.data.joinDate.split('-')
+      console.log(coba);
+
+
       this.popupVisible = true
       this.contentDataPopUp = e.data.joinDate
     }, 1000);
+  }
+
+  onSaving(e: any) {
+    console.log(e);
+
+    // const change = e.changes[0];
+
+    // if (change) {
+    //   this.dummyService.insert(change.data)
+    // }
   }
 }

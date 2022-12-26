@@ -84,5 +84,9 @@ export class DummyService {
     return sum
   }
 
+  insert(data: Employee) {
+    employees.push(data)
+    console.log(this.employees);
 
+  }
 }

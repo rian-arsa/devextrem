@@ -10,26 +10,28 @@ export class PostService {
   postData = new Subject<Post>()
   posts: Post[] = []
 
+  url = 'http://localhost:3000/posts'
+
   constructor(private http: HttpClient) {
   }
 
   getPosts() {
-    return this.http.get<Post[]>('http://localhost:3000/posts')
+    return this.http.get<Post[]>(this.url)
   }
 
   getDelete(id: number) {
-    return this.http.delete<Post>('http://localhost:3000/posts/' + id)
+    return this.http.delete<Post>(`${this.url}/${id}`)
   }
 
   getCreate(post: Post) {
-    return this.http.post<Post>('http://localhost:3000/posts', post)
+    return this.http.post<Post>(this.url, post)
   }
 
   getUpdate(post: Post, id: number) {
-    return this.http.patch<Post>('http://localhost:3000/posts/' + id, post)
+    return this.http.patch<Post>(`${this.url}/${id}`, post)
   }
 
   getPost(id: number) {
-    return this.http.get<Post>('http://localhost:3000/posts/' + id)
+    return this.http.get<Post>(`${this.url}/${id}`)
   }
 }
