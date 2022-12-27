@@ -3,8 +3,9 @@
 
 <div class="container" id="container">
   <!--! Datagrid -->
-  <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" [allowColumnReordering]="true" [repaintChangesOnly]="true">
+  <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" [columnAutoWidth]="true"
+    [allowColumnReordering]="true" [repaintChangesOnly]="true" keyExpr="id" (onSaving)="onSaving($event)"
+    (onInitNewRow)="onInitNewRow($event)" (onSaved)="onSaved()">
 
     <!--! Column2 dari Datagrid -->
     <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>
@@ -29,7 +30,7 @@
     <dxi-column dataField="isAccess" dataType="boolean" [visible]="false"></dxi-column>
 
     <!--! Edit & Save Datagrid -->
-    <dxo-editing mode="form" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true" [changes]="changes">
+    <dxo-editing mode="form" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true">
       <dxo-form>
         <dxi-item dataField="title" dataType="string">
           <dxi-validation-rule type="required"></dxi-validation-rule>
@@ -66,12 +67,12 @@
           <dx-button icon="doc" id="detailButton" #detailButton (onClick)="onDetailButton(data)"></dx-button>
         </div>
       </dxi-button>
-      <!-- <dxi-button name="delete" icon="close"></dxi-button> -->
-      <dxi-button template="detailDelete">
+      <dxi-button name="delete" icon="close"></dxi-button>
+      <!-- <dxi-button template="detailDelete">
         <div *dxTemplate="let data of 'detailDelete'">
           <dx-button icon="close" id="deleteButton" #detailDelete (onClick)="onDeleteButton(data)"></dx-button>
         </div>
-      </dxi-button>
+      </dxi-button> -->
       <dxi-button name="save" icon="save"></dxi-button>
     </dxi-column>
 
