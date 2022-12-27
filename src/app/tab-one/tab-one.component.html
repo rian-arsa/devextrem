@@ -4,7 +4,7 @@
 <div class="container">
   <!--! Datagrid -->
   <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" id="datagrid" [allowColumnReordering]="true">
+    [columnAutoWidth]="true" [allowColumnReordering]="true" (onEditorPreparing)="onEditorPreparing($event)">
 
     <!--! Element Load Panel -->
     <dxo-load-panel [enabled]="true">
@@ -22,12 +22,15 @@
       <dxo-lookup [dataSource]="genres"></dxo-lookup>
     </dxi-column>
 
+    <!-- <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxo-pager [allowedPageSizes]="[5,6,7]" [showPageSizeSelector]="true"></dxo-pager> -->
+
     <!-- <dxo-column-chooser [enabled]="true"></dxo-column-chooser> -->
     <!-- <dxo-filter-row [visible]="true"></dxo-filter-row> -->
     <!-- <dxo-search-panel [visible]="true"></dxo-search-panel> -->
 
     <!--! Add custom field form editing -->
-    <!-- <dxi-column dataField="isAccess" dataType="boolean" [visible]="false"></dxi-column> -->
+    <dxi-column dataField="isAccess" dataType="boolean" [visible]="false"></dxi-column>
 
     <!--! Edit & Save Datagrid -->
     <dxo-editing mode="form" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true" [changes]="changes">
@@ -44,14 +47,16 @@
         <dxi-item dataField="publish" dataType="date">
           <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-item>
-        <!-- <dxi-item dataField="isAccess" dataType="boolean"></dxi-item> -->
-        <dxi-item dataField="isAccess" template="isAccess">
-          <div *dxTemplate="let data of 'isAccess'">
-            <dx-check-box [value]="false" text="Label">
-              <dxi-validation-rule type="required"></dxi-validation-rule>
-            </dx-check-box>
-          </div>
+        <dxi-item dataField="isAccess" dataType="boolean">
+          <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-item>
+        <!-- <dxi-item dataField="isAccess" editorType="dxTextBox">
+        </dxi-item> -->
+        <!-- <div *dxTemplate="let data of 'isAccess'">
+          <dx-check-box [value]="data.editorOptions.value" text="Label">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+          </dx-check-box>
+        </div> -->
       </dxo-form>
     </dxo-editing>
 
@@ -65,6 +70,7 @@
           <dx-button icon="doc" id="detailButton" #detailButton (onClick)="onDetailButton(data)"></dx-button>
         </div>
       </dxi-button>
+      <!-- <dxi-button name="delete" icon="close"></dxi-button> -->
       <dxi-button template="detailDelete">
         <div *dxTemplate="let data of 'detailDelete'">
           <dx-button icon="close" id="deleteButton" #detailDelete (onClick)="onDeleteButton(data)"></dx-button>

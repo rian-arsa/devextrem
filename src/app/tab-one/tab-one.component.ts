@@ -47,10 +47,14 @@ export class TabOneComponent {
     )
   }
 
+  onEditorPreparing(e: any) {
+    // console.log(e);
+
+  }
+
   //! Function for Save & Update
   // Menggunakan function datagrid onSaving()
   saveData(e: any) {
-
     this.isPopupVisible = false
     this.isLoading = true
 
@@ -74,27 +78,26 @@ export class TabOneComponent {
         const id = this.posts.findIndex((x) => x === data.key)
         console.log(data);
 
-        const postData: Post = {
+        const tempPost: Post = {
           id: data.key.id,
           title: data.data.title ? data.data.title : data.key.title,
           author: data.data.author ? data.data.author : data.key.author,
           publish: data.data.publish ? data.data.publish : data.key.publish,
           genre: data.data.genre ? data.data.genre : data.key.genre
         }
-        this.postService.getUpdate(postData, data.key.id).subscribe(
+
+        this.postService.getUpdate(tempPost, data.key.id).subscribe(
           res => {
-            this.posts[id] = postData
+            this.posts[id] = tempPost
             console.log("[BERHASIL]");
           }
         )
       }
-
       this.changes = []
       this.post.next(this.posts)
       this.isLoading = false
-
     }
-    this.changes = []
+
   }
 
   // ! Function Detail Button

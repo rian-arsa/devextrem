@@ -1,8 +1,15 @@
 <!-- <dx-form id="form" [formData]="employee"> -->
-<form (ngSubmit)="cobaAdd(f)" #f="ngForm">
-  <dx-form id="form">
-    <dxi-item>
-      <dx-calendar [value]="currentValue"></dx-calendar>
+<form (submit)="cobaAdd($event)">
+  <dx-form id="form" [(formData)]="employee">
+    <dxi-item dataField="name"></dxi-item>
+    <dxi-item dataField="email">
+      <dxi-validation-rule type="required" message="Email is required">
+      </dxi-validation-rule>
+      <dxi-validation-rule type="async" message="Email is already registered" [validationCallback]="asyncValidation">
+      </dxi-validation-rule>
+    </dxi-item>
+    <!-- <dxi-item>
+      <dx-calendar datafi [value]="currentValue"></dx-calendar>
     </dxi-item>
     <dxi-item>
       <dx-text-box name="email" email required #emailControl="ngModel" [(ngModel)]="email"
@@ -17,6 +24,9 @@
       <dx-date-box [value]="currentValue" type="date" placeholder="12/31/2018, 2:52 PM" [showClearButton]="true"
         displayFormat="shortdate">
       </dx-date-box>
+    </dxi-item> -->
+
+    <dxi-item itemType="button" [buttonOptions]="submitButtonOptions">
     </dxi-item>
   </dx-form>
 </form>

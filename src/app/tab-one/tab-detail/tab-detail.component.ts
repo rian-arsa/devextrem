@@ -25,6 +25,7 @@ export class TabDetailComponent {
 
   // ! ngOninit
   ngOnInit(): void {
+
     this.activatedRoute.params.subscribe((params: Params) => {
       this.postService.getPost(params['id']).subscribe(res => {
         this.title = Object.values(res)[1]
@@ -70,12 +71,32 @@ export class TabDetailComponent {
   }
 
   onSaving(e: any) {
-    console.log(e);
+    // // console.log(e);
 
     // const change = e.changes[0];
+    // // console.log(e.changes[0]);
+    // const temp: Employee = change.data
+    // console.log(temp);
+
 
     // if (change) {
-    //   this.dummyService.insert(change.data)
+    //   this.dummyService.insert(temp)
+    //   // this.employeesFilter = this.dummyService.employeesFilterData
+    //   // this.sumTotalTask = this.dummyService.getSum()
     // }
   }
+
+  onSaved(e: any) {
+    const change = e.changes[0];
+    const temp: Employee = change.data
+
+    if (change) {
+      e.cancel = true
+      this.employeesFilter = this.dummyService.employeesFilterData
+      this.sumTotalTask = this.dummyService.getSum()
+      console.log(this.employees);
+
+    }
+  }
+
 }

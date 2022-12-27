@@ -60,20 +60,22 @@ const employees: Employee[] = [
 export class DummyService {
   private employees: Employee[] = employees
 
-  employeeSub = new Subject<Employee[]>()
-
   get employeesData(): Employee[] {
     return this.employees
   }
 
   get employeesFilterData(): Employee[] {
-    const employeesFilter: Employee[] = []
-    this.employees.forEach((item) => {
-      if (item.name.length >= 5) {
-        employeesFilter.push(item)
-      }
-    })
-    return employeesFilter
+    // * ForEach
+    // const employeesFilter: Employee[] = []
+    // this.employees.forEach((item) => {
+    //   if (item.name.length >= 5) {
+    //     employeesFilter.push(item)
+    //   }
+    // })
+    // return employeesFilter
+
+    // *Filter
+    return this.employees.filter(data => data.name.length >= 5)
   }
 
   getSum() {
@@ -84,9 +86,4 @@ export class DummyService {
     return sum
   }
 
-  insert(data: Employee) {
-    employees.push(data)
-    console.log(this.employees);
-
-  }
 }

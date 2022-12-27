@@ -13,7 +13,7 @@
   </dx-popover>
 
   <dx-data-grid [dataSource]="employees" [showBorders]="true" [columnAutoWidth]="true" id="datagridSatu"
-    (onSaving)="onSaving($event)" keyExpr="id">
+    (onSaving)="onSaving($event)" keyExpr="id" (onSaved)="onSaved($event)">
     <dxi-column dataField="id" dataType="number">
       <dxi-validation-rule type="required"></dxi-validation-rule>
     </dxi-column>
@@ -38,7 +38,7 @@
       <div>{{data.text | date}}</div>
     </div>
 
-    <dxo-editing mode="cell" [allowAdding]="true"></dxo-editing>
+    <dxo-editing mode="popup" [allowAdding]="true"></dxo-editing>
   </dx-data-grid>
 
   <p>Datagrid 2</p>
@@ -70,8 +70,8 @@
 
   <h3>Total : {{sumTotalTask }}</h3>
 
-  <!-- <dx-load-panel [(visible)]="panelVisible">
-  </dx-load-panel> -->
+  <dx-load-panel [(visible)]="panelVisible">
+  </dx-load-panel>
 
 
   <dx-popup [(visible)]="popupVisible" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="200"
