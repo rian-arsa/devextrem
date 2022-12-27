@@ -33,16 +33,17 @@ export class TabOneComponent {
 
   //! Ng OnInit
   ngOnInit(): void {
+    this.isLoading = true
     this.postSub = this.post.subscribe(
       res => {
         this.posts = res;
-        this.isLoading = true
+        this.isLoading = false
       }
     )
     this.postService.getPosts().subscribe(
       dataPost => {
         this.posts = dataPost
-        // this.isLoading = false
+        this.isLoading = false
       }
     )
   }
@@ -96,8 +97,16 @@ export class TabOneComponent {
       this.changes = []
       this.post.next(this.posts)
       this.isLoading = false
+      this.popupAlert()
     }
 
+  }
+
+  popupAlert() {
+    this.isPopupVisible = true
+    setTimeout(() => {
+      this.isPopupVisible = false
+    }, 1000);
   }
 
   // ! Function Detail Button
@@ -120,6 +129,7 @@ export class TabOneComponent {
             this.post.next(tempPosts)
             console.log("[BERHASIL]");
             this.isLoading = false
+            this.popupAlert()
           }
         )
       }

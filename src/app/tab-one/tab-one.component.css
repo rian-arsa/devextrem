@@ -4,6 +4,7 @@
   width: 100%;
 }
 
+
 ::ng-deep .dx-datagrid-borders .dx-datagrid-headers .dx-datagrid-table   {
   font-weight: bold;
 }

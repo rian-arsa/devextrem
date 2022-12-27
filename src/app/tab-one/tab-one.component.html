@@ -1,14 +1,10 @@
-<!-- <dx-load-panel [(visible)]="isLoading">
-</dx-load-panel> -->
+<dx-load-panel [(visible)]="isLoading" [shading]="false" [position]="{of: 'window', my: 'top' }">
+</dx-load-panel>
 
-<div class="container">
+<div class="container" id="container">
   <!--! Datagrid -->
   <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" [allowColumnReordering]="true" (onEditorPreparing)="onEditorPreparing($event)">
-
-    <!--! Element Load Panel -->
-    <dxo-load-panel [enabled]="true">
-    </dxo-load-panel>
+    [columnAutoWidth]="true" [allowColumnReordering]="true">
 
     <!--! Column2 dari Datagrid -->
     <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>
