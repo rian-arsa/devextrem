@@ -26,13 +26,13 @@ export class TabDetailComponent {
   // ! ngOninit
   ngOnInit(): void {
 
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.postService.getPost(params['id']).subscribe(res => {
-        this.title = Object.values(res)[1]
-      }, err => {
-        this.title = "Not Found"
-      })
-    })
+    // this.activatedRoute.params.subscribe((params: Params) => {
+    //   this.postService.getPost(params['id']).subscribe(res => {
+    //     this.title = Object.values(res)[1]
+    //   }, err => {
+    //     this.title = "Not Found"
+    //   })
+    // })
 
     this.employees = this.dummyService.employeesData
     this.employeesFilter = this.dummyService.employeesFilterData

@@ -24,6 +24,8 @@ export class IndexComponent {
   }
 
   onItemClick(e: any) {
+    console.log(e);
+
     if (e.itemIndex === 0) {
       this.router.navigate(['./home/tab-1'])
     } else {

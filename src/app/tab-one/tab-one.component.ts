@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
 
-import { PostService } from './post.service';
+import { Change, PostService } from './post.service';
 import { Post } from './post.model';
 import { genres } from '../shared/genres';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
-import { confirm } from 'devextreme/ui/dialog';
+
 
 
 @Component({
@@ -15,121 +15,66 @@ import { confirm } from 'devextreme/ui/dialog';
   styleUrls: ['./tab-one.component.css']
 })
 export class TabOneComponent {
-  posts: Post[] = []
-  isPopupVisible = false
-  isLoading = false
+  postSubscription!: Subscription
+  posts$!: Observable<Post[]>
 
-  //! get Genres from shared folder
+  changes: Change<Post>[] = [];
+
+  editRowKey: number | any = null;
+
+  isLoading = true;
+
+  loadPanelPosition = { of: '#gridContainer' };
+
   genres = genres
 
-  //! Create Custom Observable
-  post = new Subject<Post[]>()
-  postSub!: Subscription
-  changes = []
-
-  //! Constructor
   constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) {
   }
 
-  //! Ng OnInit
   ngOnInit(): void {
-    this.postSub = this.post.subscribe(
-      res => {
-        this.posts = res;
-        this.isLoading = true
-      }
-    )
-    this.postService.getPosts().subscribe(
-      dataPost => {
-        this.posts = dataPost
-        // this.isLoading = false
-      }
-    )
-  }
+    this.posts$ = this.postService.getPosts()
 
-  onEditorPreparing(e: any) {
-    // console.log(e);
-
-  }
-
-  //! Function for Save & Update
-  // Menggunakan function datagrid onSaving()
-  saveData(e: any) {
-    this.isPopupVisible = false
     this.isLoading = true
+    this.postSubscription = this.posts$.subscribe(() => {
+      this.isLoading = false
+    })
+  }
 
-    const data = e.changes[0]
+
+  onSaving(e: any) {
+    const change = e.changes[0]
+
     console.log(e);
 
-    if (data) {
-      e.cancel = true
-      if (data.type === "insert") { // Insert Data
-        const lastData = Object.values(this.posts[this.posts.length - 1])
 
-        const tempPost = { ...data.data, id: lastData[0] + 1 }
-
-        this.postService.getCreate(tempPost).subscribe(
-          res => {
-            this.posts.push(tempPost)
-            console.log("[BERHASIL]");
-          }
-        )
-      } else if (data.type === "update") { // Update Data
-        const id = this.posts.findIndex((x) => x === data.key)
-        console.log(data);
-
-        const tempPost: Post = {
-          id: data.key.id,
-          title: data.data.title ? data.data.title : data.key.title,
-          author: data.data.author ? data.data.author : data.key.author,
-          publish: data.data.publish ? data.data.publish : data.key.publish,
-          genre: data.data.genre ? data.data.genre : data.key.genre
-        }
-
-        this.postService.getUpdate(tempPost, data.key.id).subscribe(
-          res => {
-            this.posts[id] = tempPost
-            console.log("[BERHASIL]");
-          }
-        )
-      }
-      this.changes = []
-      this.post.next(this.posts)
-      this.isLoading = false
+    if (change) {
+      e.cancel = true;
+      e.promise = this.processSaving(change);
     }
-
   }
 
-  // ! Function Detail Button
+  async processSaving(change: Change<Post>) {
+    this.isLoading = true;
+
+    try {
+      await this.postService.saveChange(change);
+      this.editRowKey = null;
+      this.changes = [];
+      console.log("[BERHASIL]");
+
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
   onDetailButton(e: any) {
 
     const id = e.data.id
     this.router.navigate([id], { relativeTo: this.route })
   }
 
-  // ! Function Delete Button
-  onDeleteButton(e: any) {
-    let result = confirm(`Are you sure delete <strong>${e.data.title}</strong> ?`, `Delete Item`);
-    result.then((dialogResult) => {
-      if (dialogResult) {
-        this.isLoading = true
-        const tempPosts = this.posts.filter(x => x != e.data)
-
-        this.postService.getDelete(e.data.id).subscribe(
-          res => {
-            this.post.next(tempPosts)
-            console.log("[BERHASIL]");
-            this.isLoading = false
-          }
-        )
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    this.postSub.unsubscribe()
+  ngOnDestroy() {
+    this.postSubscription.unsubscribe();
   }
 
 }

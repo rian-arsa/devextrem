@@ -4,6 +4,11 @@
   width: 100%;
 }
 
+::ng-deep #gridContainer {
+  height: 440px;
+}
+
+
 ::ng-deep .dx-datagrid-borders .dx-datagrid-headers .dx-datagrid-table   {
   font-weight: bold;
 }

@@ -1,14 +1,10 @@
-<!-- <dx-load-panel [(visible)]="isLoading">
-</dx-load-panel> -->
+<dx-load-panel [position]="loadPanelPosition" [visible]="isLoading">
+</dx-load-panel>
 
 <div class="container">
   <!--! Datagrid -->
-  <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" [allowColumnReordering]="true" (onEditorPreparing)="onEditorPreparing($event)">
-
-    <!--! Element Load Panel -->
-    <dxo-load-panel [enabled]="true">
-    </dxo-load-panel>
+  <dx-data-grid id="gridContainer" [dataSource]="posts$ | async" [showBorders]="true" (onSaving)="onSaving($event)"
+    [repaintChangesOnly]="true" [columnAutoWidth]="true" [allowColumnReordering]="true" keyExpr="id">
 
     <!--! Column2 dari Datagrid -->
     <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>
@@ -70,23 +66,23 @@
           <dx-button icon="doc" id="detailButton" #detailButton (onClick)="onDetailButton(data)"></dx-button>
         </div>
       </dxi-button>
-      <!-- <dxi-button name="delete" icon="close"></dxi-button> -->
-      <dxi-button template="detailDelete">
+      <dxi-button name="delete" icon="close"></dxi-button>
+      <!-- <dxi-button template="detailDelete">
         <div *dxTemplate="let data of 'detailDelete'">
           <dx-button icon="close" id="deleteButton" #detailDelete (onClick)="onDeleteButton(data)"></dx-button>
         </div>
-      </dxi-button>
+      </dxi-button> -->
       <dxi-button name="save" icon="save"></dxi-button>
     </dxi-column>
 
   </dx-data-grid>
 
   <!--! Element popup -->
-  <dx-popup [(visible)]="isPopupVisible" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="150"
+  <!-- <dx-popup [(visible)]="isPopupVisible" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="150"
     [width]="200" [resizeEnabled]="true" [showTitle]="false">
     <div *dxTemplate="let data of 'popup-content'">
       <h1 class="popup-body">Berhasil</h1>
     </div>
-  </dx-popup>
+  </dx-popup> -->
 
 </div>

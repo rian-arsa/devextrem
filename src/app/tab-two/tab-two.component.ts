@@ -17,8 +17,8 @@ export class TabTwoComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.postService.getPosts().subscribe(res => {
-      this.posts = res
-    })
+    // this.postService.getPosts().subscribe(res => {
+    //   this.posts = res
+    // })
   }
 }
