@@ -18,6 +18,7 @@ export class TabOneComponent {
   posts: Post[] = []
   isPopupVisible = false
   isLoading = false
+  isUpdate = false
 
   //! get Genres from shared folder
   genres = genres
@@ -47,12 +48,6 @@ export class TabOneComponent {
       }
     )
   }
-
-  onEditorPreparing(e: any) {
-    // console.log(e);
-
-  }
-
   //! Function for Save & Update
   // Menggunakan function datagrid onSaving()
   saveData(e: any) {
@@ -64,6 +59,7 @@ export class TabOneComponent {
 
     if (data) {
       e.cancel = true
+      this.isUpdate = true
       if (data.type === "insert") { // Insert Data
         const lastData = Object.values(this.posts[this.posts.length - 1])
 
@@ -77,7 +73,6 @@ export class TabOneComponent {
         )
       } else if (data.type === "update") { // Update Data
         const id = this.posts.findIndex((x) => x === data.key)
-        console.log(data);
 
         const tempPost: Post = {
           id: data.key.id,

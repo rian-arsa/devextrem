@@ -4,7 +4,7 @@
 <div class="container" id="container">
   <!--! Datagrid -->
   <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" [allowColumnReordering]="true">
+    [columnAutoWidth]="true" [allowColumnReordering]="true" [repaintChangesOnly]="true">
 
     <!--! Column2 dari Datagrid -->
     <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>
@@ -44,7 +44,7 @@
           <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-item>
         <dxi-item dataField="isAccess" dataType="boolean">
-          <dxi-validation-rule type="required"></dxi-validation-rule>
+          <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
         </dxi-item>
         <!-- <dxi-item dataField="isAccess" editorType="dxTextBox">
         </dxi-item> -->
