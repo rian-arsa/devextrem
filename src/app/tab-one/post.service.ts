@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
+
   posts: Post[] = []
 
   url = 'http://localhost:3000/posts'

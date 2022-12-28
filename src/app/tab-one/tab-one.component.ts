@@ -20,19 +20,16 @@ export class TabOneComponent {
   isLoading = false
   isUpdate = false
 
-  //! get Genres from shared folder
   genres = genres
 
-  //! Create Custom Observable
   post = new Subject<Post[]>()
   postSub!: Subscription
-  changes = []
+  changes: any = []
+  editRowKey: number | any = null
 
-  //! Constructor
   constructor(private postService: PostService, private route: ActivatedRoute, private router: Router) {
   }
 
-  //! Ng OnInit
   ngOnInit(): void {
     this.isLoading = true
     this.postSub = this.post.subscribe(
@@ -48,53 +45,47 @@ export class TabOneComponent {
       }
     )
   }
-  //! Function for Save & Update
+
+  onInitNewRow(e: any) {
+    e.data.id = this.posts ? Object.values(this.posts[this.posts.length - 1])[0] + 1 : 1
+  }
+
   // Menggunakan function datagrid onSaving()
   saveData(e: any) {
-    this.isPopupVisible = false
-    this.isLoading = true
+    const change = e.changes[0]
 
-    const data = e.changes[0]
-    console.log(e);
-
-    if (data) {
+    if (change) {
+      this.isLoading = true
       e.cancel = true
-      this.isUpdate = true
-      if (data.type === "insert") { // Insert Data
-        const lastData = Object.values(this.posts[this.posts.length - 1])
 
-        const tempPost = { ...data.data, id: lastData[0] + 1 }
+      if (change.type === "insert") { // Insert Data
 
-        this.postService.getCreate(tempPost).subscribe(
-          res => {
-            this.posts.push(tempPost)
-            console.log("[BERHASIL]");
+        this.postService.getCreate(change.data).subscribe(
+          (res) => {
+            const tempPosts = [...this.posts, change.data]
+
+            this.post.next(tempPosts)
+            this.changes = []
+            this.editRowKey = null
+            this.isLoading = false
+            this.popupAlert()
           }
         )
-      } else if (data.type === "update") { // Update Data
-        const id = this.posts.findIndex((x) => x === data.key)
+      } else if (change.type === "update") { // Update Data
 
-        const tempPost: Post = {
-          id: data.key.id,
-          title: data.data.title ? data.data.title : data.key.title,
-          author: data.data.author ? data.data.author : data.key.author,
-          publish: data.data.publish ? data.data.publish : data.key.publish,
-          genre: data.data.genre ? data.data.genre : data.key.genre
-        }
+        this.postService.getUpdate(change.data, change.key).subscribe(
+          (res) => {
+            const tempPosts = this.posts.map(x => x.id === change.key ? res : x)
 
-        this.postService.getUpdate(tempPost, data.key.id).subscribe(
-          res => {
-            this.posts[id] = tempPost
-            console.log("[BERHASIL]");
+            this.post.next(tempPosts)
+            this.changes = []
+            this.editRowKey = null
+            this.isLoading = false
+            this.popupAlert()
           }
         )
       }
-      this.changes = []
-      this.post.next(this.posts)
-      this.isLoading = false
-      this.popupAlert()
     }
-
   }
 
   popupAlert() {
@@ -104,14 +95,11 @@ export class TabOneComponent {
     }, 1000);
   }
 
-  // ! Function Detail Button
   onDetailButton(e: any) {
-
     const id = e.data.id
     this.router.navigate([id], { relativeTo: this.route })
   }
 
-  // ! Function Delete Button
   onDeleteButton(e: any) {
     let result = confirm(`Are you sure delete <strong>${e.data.title}</strong> ?`, `Delete Item`);
     result.then((dialogResult) => {
@@ -122,7 +110,6 @@ export class TabOneComponent {
         this.postService.getDelete(e.data.id).subscribe(
           res => {
             this.post.next(tempPosts)
-            console.log("[BERHASIL]");
             this.isLoading = false
             this.popupAlert()
           }

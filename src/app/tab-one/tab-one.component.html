@@ -4,7 +4,8 @@
 <div class="container" id="container">
   <!--! Datagrid -->
   <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" [allowColumnReordering]="true" [repaintChangesOnly]="true">
+    [columnAutoWidth]="true" [allowColumnReordering]="true" [repaintChangesOnly]="true"
+    (onInitNewRow)="onInitNewRow($event)" keyExpr="id">
 
     <!--! Column2 dari Datagrid -->
     <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>
@@ -29,7 +30,8 @@
     <dxi-column dataField="isAccess" dataType="boolean" [visible]="false"></dxi-column>
 
     <!--! Edit & Save Datagrid -->
-    <dxo-editing mode="form" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true" [changes]="changes">
+    <dxo-editing mode="form" [allowAdding]="true" [allowDeleting]="true" [allowUpdating]="true" [(changes)]="changes"
+      [(editRowKey)]="editRowKey">
       <dxo-form>
         <dxi-item dataField="title" dataType="string">
           <dxi-validation-rule type="required"></dxi-validation-rule>
@@ -43,7 +45,7 @@
         <dxi-item dataField="publish" dataType="date">
           <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-item>
-        <dxi-item dataField="isAccess" dataType="boolean">
+        <dxi-item dataField="isAccess" dataType="boolean" [editorOptions]="{value: false}">
           <!-- <dxi-validation-rule type="required"></dxi-validation-rule> -->
         </dxi-item>
         <!-- <dxi-item dataField="isAccess" editorType="dxTextBox">
