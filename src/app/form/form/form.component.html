@@ -1,12 +1,48 @@
 <!-- <dx-form id="form" [formData]="employee"> -->
 <form (submit)="cobaAdd($event)">
-  <dx-form id="form" [(formData)]="employee">
-    <dxi-item dataField="name"></dxi-item>
-    <dxi-item dataField="email">
-      <dxi-validation-rule type="required" message="Email is required">
-      </dxi-validation-rule>
-      <dxi-validation-rule type="async" message="Email is already registered" [validationCallback]="asyncValidation">
-      </dxi-validation-rule>
+  <dx-form id="form" [(formData)]="employee" [colCount]="2">
+    <dxi-item itemType="group" caption="Personal Information">
+      <dxi-item dataField="name">
+        <dxi-validation-rule type="required" message="First Name is required">
+        </dxi-validation-rule>
+        <dxi-validation-rule type="pattern" pattern="^[a-zA-Z]+$" message="The name should not contain digits">
+        </dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="position"></dxi-item>
+      <dxi-item dataField="hireDate"></dxi-item>
+      <!-- <dxi-item dataField="officeNumber"></dxi-item> -->
+      <dxi-item itemType="empty" [colSpan]="2">
+      </dxi-item>
+    </dxi-item>
+    <dxi-item itemType="group" caption="Contacts">
+      <dxi-item dataField="phone"></dxi-item>
+      <dxi-item dataField="skype"></dxi-item>
+      <dxi-item dataField="email">
+        <dxi-validation-rule type="email">
+        </dxi-validation-rule>
+      </dxi-item>
+    </dxi-item>
+    <!-- <dxi-item dataField="notes" [template]="'notesTemplate'">
+    </dxi-item> -->
+    <dxi-item dataField="picture" [template]="'pictureTemplate'">
+    </dxi-item>
+    <div *dxTemplate="let data of 'notesTemplate'">
+      <!-- <dx-text-area [(value)]="employee.notes"></dx-text-area> -->
+    </div>
+    <div *dxTemplate="let data of 'pictureTemplate'">
+      <img src="{{data.editorOptions.value}}">
+    </div>
+
+    <dxi-item itemType="tabbed">
+      <dxi-tab title="Info">
+        <dxi-item dataField="position"></dxi-item>
+        <dxi-item dataField="hireDate"></dxi-item>
+        <dxi-item dataField="city"></dxi-item>
+      </dxi-tab>
+      <dxi-tab title="Contacts">
+        <dxi-item dataField="phone"></dxi-item>
+        <dxi-item dataField="email"></dxi-item>
+      </dxi-tab>
     </dxi-item>
     <!-- <dxi-item>
       <dx-calendar datafi [value]="currentValue"></dx-calendar>

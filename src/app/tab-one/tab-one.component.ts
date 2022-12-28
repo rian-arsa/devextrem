@@ -46,10 +46,6 @@ export class TabOneComponent {
     )
   }
 
-  onInitNewRow(e: any) {
-    e.data.id = this.posts ? Object.values(this.posts[this.posts.length - 1])[0] + 1 : 1
-  }
-
   // Menggunakan function datagrid onSaving()
   saveData(e: any) {
     const change = e.changes[0]
@@ -62,7 +58,8 @@ export class TabOneComponent {
 
         this.postService.getCreate(change.data).subscribe(
           (res) => {
-            const tempPosts = [...this.posts, change.data]
+
+            const tempPosts = [...this.posts, res]
 
             this.post.next(tempPosts)
             this.changes = []
@@ -75,6 +72,7 @@ export class TabOneComponent {
 
         this.postService.getUpdate(change.data, change.key).subscribe(
           (res) => {
+
             const tempPosts = this.posts.map(x => x.id === change.key ? res : x)
 
             this.post.next(tempPosts)
@@ -105,10 +103,11 @@ export class TabOneComponent {
     result.then((dialogResult) => {
       if (dialogResult) {
         this.isLoading = true
-        const tempPosts = this.posts.filter(x => x != e.data)
 
         this.postService.getDelete(e.data.id).subscribe(
           res => {
+            const tempPosts = this.posts.filter(x => x != e.data)
+
             this.post.next(tempPosts)
             this.isLoading = false
             this.popupAlert()
@@ -123,6 +122,5 @@ export class TabOneComponent {
     //Add 'implements OnDestroy' to the class.
     this.postSub.unsubscribe()
   }
-
 }
 

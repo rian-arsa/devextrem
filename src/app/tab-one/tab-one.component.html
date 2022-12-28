@@ -4,8 +4,7 @@
 <div class="container" id="container">
   <!--! Datagrid -->
   <dx-data-grid [dataSource]="posts" [showBorders]="true" id="postsTable" (onSaving)="saveData($event)"
-    [columnAutoWidth]="true" [allowColumnReordering]="true" [repaintChangesOnly]="true"
-    (onInitNewRow)="onInitNewRow($event)" keyExpr="id">
+    [columnAutoWidth]="true" [allowColumnReordering]="true" [repaintChangesOnly]="true" keyExpr="id">
 
     <!--! Column2 dari Datagrid -->
     <dxi-column dataField="id" dataType="number" [visible]="false"></dxi-column>

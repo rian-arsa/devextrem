@@ -22,7 +22,9 @@ export class FormComponent {
   checkBox!: boolean;
 
   employee = {
-
+    name: '',
+    email: '',
+    notes: ''
   }
 
   asyncValidation(params: any) {
