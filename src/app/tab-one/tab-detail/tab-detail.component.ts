@@ -57,14 +57,9 @@ export class TabDetailComponent {
   // ! Show popup
   popupDate(e: any) {
     this.panelVisible = true
+    this.popupVisible = false
     setTimeout(() => {
       this.panelVisible = false
-      this.popupVisible = true
-
-      const coba = e.data.joinDate.split('-')
-      console.log(coba);
-
-
       this.popupVisible = true
       this.contentDataPopUp = e.data.joinDate
     }, 1000);
@@ -88,14 +83,10 @@ export class TabDetailComponent {
 
   onSaved(e: any) {
     const change = e.changes[0];
-    const temp: Employee = change.data
 
     if (change) {
-      e.cancel = true
       this.employeesFilter = this.dummyService.employeesFilterData
       this.sumTotalTask = this.dummyService.getSum()
-      console.log(this.employees);
-
     }
   }
 

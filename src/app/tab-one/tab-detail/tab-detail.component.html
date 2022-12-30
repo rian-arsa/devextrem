@@ -38,7 +38,7 @@
       <div>{{data.text | date}}</div>
     </div>
 
-    <dxo-editing mode="popup" [allowAdding]="true"></dxo-editing>
+    <dxo-editing mode="cell" [allowAdding]="true"></dxo-editing>
   </dx-data-grid>
 
   <p>Datagrid 2</p>
@@ -72,32 +72,30 @@
   </dx-load-panel>
 
 
-  <dx-popup [visible]="true" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="200"
+  <dx-popup [visible]="popupVisible" [hideOnOutsideClick]="true" contentTemplate="popup-content" [height]="200"
     [showTitle]="false" [width]="230" [resizeEnabled]="true">
     <div *dxTemplate="let data of 'popup-content'">
-      <div class="popup-date">
-        <div>
+      <div class="popup-content">
+        <div class="top-content">
           <span class="date">18</span>
+          <img src="https://cdn.iconscout.com/icon/free/png-256/next-arrow-2537334-2130489.png" alt=""
+            class="image-next">
+          <span class="odd-even-text">Odd Number</span>
         </div>
-        <div>
-          <div class="odd-even">
-            <img src="https://cdn.iconscout.com/icon/free/png-256/next-arrow-2537334-2130489.png" alt=""
-              class="image-next">
-            <span>Odd Number</span>
+
+        <div class="popup-date">
+          <div>
+            <span class="day">Tuesday</span>
+            <span class="year">2022</span>
+          </div>
+          <div class="parent-month2">
+            <span class="month">Nov</span>
           </div>
         </div>
-      </div>
+        <hr>
 
-      <div class="popup-date">
-        <div>
-          <span class="day">Tuesday</span>
-          <span class="year">2022</span>
-        </div>
-        <div class="parent-month">
-          <span class="month">Nov</span>
-        </div>
+        <p class="popup-body">{{contentDataPopUp}}</p>
       </div>
-      <!-- <span class="popup-body">{{contentDataPopUp | date}}</span> -->
     </div>
   </dx-popup>
 

@@ -57,6 +57,10 @@ td {
   padding: 0;
 }
 
+.popup-content {
+  padding: 10px
+}
+
 .popup-date {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -64,11 +68,19 @@ td {
   align-items:center;
 }
 
-.popup-date .date {
-  display: block;
+.date {
+  display: inline-block;
+  margin-right: 10px;
   font-size: 70px;
   font-weight: bold;
   color: black;
+}
+
+.top-content {
+  display: flex;
+  align-items: center;
+  margin-top: -10px;
+  /* justify-content: center; */
 }
 
 .popup-date .day {
@@ -77,27 +89,38 @@ td {
   font-size: 20px;
 }
 
+.odd-event {
+  display: inline;
+}
+
 .popup-date .year {
   display: block;
   margin-top: -5px;
   font-size: 30px;
 }
 
-.popup-date .image-next {
+.image-next {
   width: 20px;
   height: 20px;
   margin-right: 5px;
 }
 
-.popup-date .odd-even {
-  display: flex;
-  justify-content: center;
+.odd-even-text {
+  font-weight: 500;
 }
 
 .popup-date .month {
   font-size: 40px;
 }
 
-.popup-date .parent-month {
+.popup-date .parent-month2 {
+  display: flex;
   align-items: flex-start;
+}
+
+.popup-body {
+  margin-top: -5px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 12px;
 }
